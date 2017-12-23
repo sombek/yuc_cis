@@ -1,21 +1,62 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>WebSockets 101</title>
-    <script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
-    <link href="/styles.css" rel="stylesheet"/>
-  </head>
-  <body>
-    <div id = "mario-chat">
-      <div id = "chat-window">
-        <div id ="output"></div>
-        <div id = "feedback"></div>
-      </div>
-      <input id = "handle" type = "text" placeholder = "Handle" /></input>
-      <input id = "message" type = "text" placeholder="Message"/></input>
-      <button id = "send">Send</button>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Flat UI Login</title>
+        <link rel="stylesheet" href="style1.css">
+        <script>
+           function myFunction(){
+               var select = document.getElementById('selection');
+               var time = document.getElementById('time1');
+               var time1 = document.getElementById('time2');
+
+                if(select.value==1){
+                    time1.style.display='none'
+                    time.style.display='';
+                }
+                else {
+                    time1.style.display=''
+                    time.style.display='none';
+                }
+           }
+        </script>
+</head>
+
+<body>
+
+<div class="login-page">
+    <img src="https://pbs.twimg.com/profile_images/1184870884/logo_400x400.png" id='yuc'>
+    <h5 id='text'>This user interface has been designed to activate the collaborative information seeking (CIS) among students and help them solving their academic problems. This innovative interface allows collaborators to share the search engine results and discuss them via real-time interactive sessions.</h5>
+  <div class="form">
+    <div class="login-form">
+        <form action="page.html" method="get">
+            <input type="text" placeholder="Name" name="name"required/>
+            <div  class="styled-select slate" style="margin-left:-5px">
+                <select required onchange="myFunction()" id='selection'>
+                    <option value="" disabled selected>Select Field</option>
+                    <option value="1">Programming</option> 
+                    <option value="2">Networks</option> 
+                    <option value="cs201" disabled>Opreating Systems</option>
+                    <option value="cs201" disabled>Computer Graphics</option>
+                </select>
+            </div>
+            <div id='time1' style="display: none">
+                Please Select Session:<br>
+                <input type="radio" id='rad'> 10AM - 11AM<br>
+                <input type="radio" id="rad"> 3PM - 4PM<br>
+                <input type="radio" id="rad"> 4PM - 5PM
+            </div>
+            <div id='time2' style="display: none">
+                                Please Select Session:<br>
+                <input type="radio"  id='rad' required> 9AM - 10AM<br>
+                <input type="radio"  id="rad"required> 2PM - 3PM<br>
+                <input type="radio"  id="rad"required> 1PM - 2PM
+            </div>
+            <button>Connect</button>
+        </form>
     </div>
-    <script src = "/chat.js"> </script>
-  </body>
+  </div>
+</div>
+    
+</body>
 </html>

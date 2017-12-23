@@ -7,17 +7,42 @@ h2{
     padding: 10px 20px;
     color: #575ed8;
 }
-
+#time{
+    display: block;
+    text-align: right;
+}
 #mario-chat{
-    max-width: 600px;
-    margin: 30px auto;
+    max-width: 500px;
+    margin: 40px;
     border: 1px solid #ddd;
     box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
     border-radius: 2px;
 }
 
+#link-box{
+    max-width: 400px;
+    margin-top: 40px;
+    margin-left: -60px;
+    border: 1px solid #ddd;
+    box-shadow: 1px 3px 5px rgba(0,0,0,0.05);
+    border-radius: 2px;
+    background-color: red;
+}
+sub {
+    text-align: right;
+}
 #chat-window{
-    height: 400px;
+    height: 315px;
+    overflow: auto;
+    background: #f9f9f9;
+}
+#usersList{
+    height: 315px;
+    overflow: auto;
+    background: #f9f9f9;
+}
+#links-window{
+    height: 389px;
     overflow: auto;
     background: #f9f9f9;
 }
@@ -34,8 +59,16 @@ h2{
     padding: 14px 0px;
     margin: 0 20px;
 }
+#feedback1 p{
+    color: #aaa;
+    padding: 14px 0px;
+    margin: 0 20px;
+}
 
 #output strong{
+    color: #575ed8;
+}
+#output1 strong{
     color: #575ed8;
 }
 
@@ -44,7 +77,22 @@ label{
     display: block;
     padding: 10px 20px;
 }
-
+#arrow{
+    width: 180px;
+    margin-left: -10px;
+    position: absolute;
+    z-index: 1;
+    -moz-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+}
+#text1{
+    margin-top: 180px;
+    position: absolute;
+}
+#yuc{
+    margin-top: 20px;
+    width: 150px;
+}
 input{
     padding: 10px 20px;
     box-sizing: border-box;
@@ -56,6 +104,11 @@ input{
     border-bottom: 1px solid #eee;
     font-family: Nunito;
     font-size: 16px;
+}
+
+#handle{
+    background-color: #bae8ed;
+    height: 30px;
 }
 
 button{
