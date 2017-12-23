@@ -2,7 +2,7 @@ var express = require('express');
 var socket = require('socket.io');
 //App setup
 var app = express();
-var server = app.listen(4000,'192.168.1.129',function(){
+var server = app.listen(80,function(){
   console.log("Listening to requests on port 4000")
 });
 
