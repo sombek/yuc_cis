@@ -1,5 +1,5 @@
 //Make connection
-var socket = io.connect('ec2-54-202-56-225.us-west-2.compute.amazonaws.com:3000');
+var socket = io.connect('ec2-54-202-56-225.us-west-2.compute.amazonaws.com:3000',{'sync disconnect on unload': true });
 
 socket.on('check', function(message) {
     console.log(message);
@@ -15,20 +15,19 @@ var message = document.getElementById('message');
 
 
     name = window.location.search.split('=')[1];
-    if(name.includes('%'))
-        handleName = 'user';
-    else 
-        handleName =name;
+    if(name.includes('%')) handleName = 'user';
+    else handleName = name;
     handle.value = handleName;
 
- socket.on('connect', function() {
-     socket.emit('online',handleName);
- });
+socket.on('connect', function() {
+    socket.emit('online',handleName);
+});
 
 $('#disconnect').click(function(){
     console.log('disconnect');
     socket.emit('offline',handleName);
     socket.disconnect();
+    location.href='/'
 });
 
 //Emit events
@@ -38,17 +37,24 @@ btn.addEventListener("keyup", function(event) {
         btn.click();
     }
 });
+
+window.addEventListener("unload", ()=>{
+   console.log('disconnect');
+    socket.emit('offline',handleName);
+    socket.disconnect(); 
+});
+
 btn.addEventListener('click',function(){
     if(message.value != ""){
         socket.emit('chat',{
             message: message.value,
-            handle: handleName
+            handle: handleName,
+            id: socket.id
         });
     }
     message.value = '';
     myDate = new Date();
     time = myDate.getHours() + ":" + myDate.getMinutes() + ":" + myDate.getSeconds();
-
 });
 
 message.addEventListener('keypress',function(){
@@ -57,7 +63,6 @@ message.addEventListener('keypress',function(){
 
 myDate = new Date(); 
 var time = myDate.getHours() + ":" + myDate.getMinutes() + ":" + myDate.getSeconds();
-
 
 socket.on('chat', function(data){
     console.log(data);
@@ -78,8 +83,8 @@ socket.on('online',function(data){
     if(users[0] == undefined) users[0]="";
     if(users[1] == undefined) users[1]="";
     document.getElementById('output2').innerHTML = users[0] + users[1] ;
-
 });
+
 socket.on('offline',function(data){
     data.forEach((user)=>{
         document.getElementById('output2').innerHTML = user + ' is connected' + '<br>';
@@ -87,7 +92,7 @@ socket.on('offline',function(data){
 });
 
 socket.on('print',function(data){
-feedback1.innerHTML += '<hr>';
+    feedback1.innerHTML += '<hr>';
     data.forEach((element,i)=>{
        feedback1.innerHTML +='<p><strong>'+ (i+1)  +":</strong> <a href='"+element+"'><em>" + element + '</p>'; 
         updateScroll();

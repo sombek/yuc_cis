@@ -3,9 +3,8 @@ var socket = require('socket.io');
 //App setup
 var app = express();
 var server = app.listen(3000,function(){
-  console.log("Listening to requests on port 4000")
+  console.log("Listening to requests on port 3000")
 });
-
 
 var fs = require('fs');
 
@@ -31,9 +30,6 @@ app.use(function (req, res, next) {
     next();
 });
 
-// POST http://localhost:8080/api/users
-// parameters sent with 
-
 app.post('/', function(req, res) {
 	var user_id = req.body;
 	console.log(user_id);
@@ -42,11 +38,31 @@ app.post('/', function(req, res) {
 //Static files
 app.use(express.static('public'));
 var users = [];
-var list = {
-    handleName:'',
-    id:''
-};
 var arr =[];
+
+function remove(){       
+    if(users[0]==undefined){
+        fs.exists('public/txt/messages.txt', function(exists) {
+            if(exists){
+                fs.unlink('public/txt/messages.txt', function (err) {
+                    if (err) throw err;
+                    // if no error, file has been deleted successfully
+                    console.log('File deleted!');
+                });
+            }
+        });
+        fs.exists('public/txt/links.txt', function(exists) {
+            if(exists){
+                fs.unlink('public/txt/links.txt', function (err) {
+                    if (err) throw err;
+                    // if no error, file has been deleted successfully
+                    console.log('File deleted!');
+                });
+            }
+        });
+    }
+}
+
 //Socket setup
 var io = socket(server);
 io.on('connection',function(socket){
@@ -72,13 +88,14 @@ io.on('connection',function(socket){
            }
         }
         console.log(users);
-            io.sockets.emit('offline', users);
+        remove();
+        io.sockets.emit('offline', users);
     }); 
     
     socket.on('chat', function(data){
          var time = myDate.getHours() + ":" + myDate.getMinutes() + ":" + myDate.getSeconds();
 
-        fs.appendFileSync('public/messages.txt', data.handle + ': ' +data.message + ' ('+ time + ')\r\n');
+        fs.appendFileSync('public/txt/messages.txt', data.handle + ': ' +data.message + ' ('+ time + ')\r\n');
         io.sockets.emit('chat', data);
     });
 
@@ -86,19 +103,16 @@ io.on('connection',function(socket){
         socket.broadcast.emit('typing',data);
     });
     
-myDate = new Date(); 
+    myDate = new Date(); 
 
     socket.on('tabs',function(data){
         var time = myDate.getHours() + ":" + myDate.getMinutes() + ":" + myDate.getSeconds();
 
-        fs.appendFileSync('public/links.txt',time +' time of first link shared' + '\r\n \r\n');
+        fs.appendFileSync('public/links.txt',time 
+                          +' time of first link shared' + '\r\n \r\n');
         data.forEach((link,i)=>{
             fs.appendFileSync('public/links.txt',i+1 + '- '+ link + '\r\n \r\n');
         });
-//        for(var i =0;i<arr.length;i++){
-//            if(socket.id === arr[i].id)
-//                console.log(arr[i].handleName);
-//        }
         io.sockets.emit('print', data);
     });
 });
