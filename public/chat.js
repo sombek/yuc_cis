@@ -1,5 +1,5 @@
 //Make connection
-var socket = io.connect('ec2-54-202-56-225.us-west-2.compute.amazonaws.com');
+var socket = io.connect('ec2-54-202-56-225.us-west-2.compute.amazonaws.com:3000');
 
 socket.on('check', function(message) {
     console.log(message);
