@@ -80,14 +80,15 @@ label{
 #arrow{
     width: 180px;
     margin-left: -10px;
-    position: absolute;
+    float:right;
+    position:relative;
     z-index: 1;
-    -moz-transform: scaleX(-1);
-    -webkit-transform: scaleX(-1);
 }
 #text1{
     margin-top: 180px;
-    position: absolute;
+    float:right;
+    position:relative;
+
 }
 #yuc{
     margin-top: 20px;

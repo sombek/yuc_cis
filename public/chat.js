@@ -1,10 +1,17 @@
 //Make connection
 var socket = io.connect('ec2-54-202-56-225.us-west-2.compute.amazonaws.com:3000',{'sync disconnect on unload': true });
 
+//var socket = io.connect('localhost:3000',{'sync disconnect on unload': true });
 socket.on('check', function(message) {
     console.log(message);
 });
 
+function getRoomName(){
+    var location = window.location.href;
+    var url = new URL(location);
+    var c = url.searchParams.get("field");
+return c;}
+document.getElementById('title').innerHTML += ' | '+getRoomName();
 //Query DOM
 var message = document.getElementById('message');
     handle = document.getElementById('handle');
@@ -94,7 +101,7 @@ socket.on('offline',function(data){
 socket.on('print',function(data){
     feedback1.innerHTML += '<hr>';
     data.forEach((element,i)=>{
-       feedback1.innerHTML +='<p><strong>'+ (i+1)  +":</strong> <a href='"+element+"'><em>" + element + '</p>'; 
+       feedback1.innerHTML +='<p><strong>'+ (i+1)  +":</strong> <a href='"+element+" 'target='_blank'> <em>" + element + '</p>'; 
         updateScroll();
     });
 });
@@ -105,6 +112,13 @@ function updateScroll(){
 }
 
 function arrBox(){
+    var myWindow = window.open('','','width=200,height=100');
+    jQuery.get('ec2-54-202-56-225.us-west-2.compute.amazonaws.com:3000/print', function(data) {
+        console.log(data);
+    });
+    myWindow.document.write()
+    myWindow.print();
+
     var arr = document.getElementById('arrBox');
     arr.style.display='';
     arr.onmouseover= ()=>{

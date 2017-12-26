@@ -35,6 +35,13 @@ app.post('/', function(req, res) {
 	console.log(user_id);
 });
 
+app.get('/print', function(req, res) {
+    var text = fs.readFileSync("public/txt/messages.txt").toString('utf-8');
+    text = text + '\n\n'
+    text = text+fs.readFileSync("public/txt/links.txt").toString('utf-8');
+    res.send(text);
+});
+
 //Static files
 app.use(express.static('public'));
 var users = [];
@@ -51,6 +58,7 @@ function remove(){
                 });
             }
         });
+        
         fs.exists('public/txt/links.txt', function(exists) {
             if(exists){
                 fs.unlink('public/txt/links.txt', function (err) {
@@ -108,10 +116,10 @@ io.on('connection',function(socket){
     socket.on('tabs',function(data){
         var time = myDate.getHours() + ":" + myDate.getMinutes() + ":" + myDate.getSeconds();
 
-        fs.appendFileSync('public/links.txt',time 
+        fs.appendFileSync('public/txt/links.txt',time 
                           +' time of first link shared' + '\r\n \r\n');
         data.forEach((link,i)=>{
-            fs.appendFileSync('public/links.txt',i+1 + '- '+ link + '\r\n \r\n');
+            fs.appendFileSync('public/txt/links.txt',i+1 + '- '+ link + '\r\n \r\n');
         });
         io.sockets.emit('print', data);
     });

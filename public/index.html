@@ -10,7 +10,7 @@
                var time = document.getElementById('time1');
                var time1 = document.getElementById('time2');
 
-                if(select.value==1){
+                if(select.value=='Computer-Programming'){
                     time1.style.display='none'
                     time.style.display='';
                 }
@@ -32,25 +32,32 @@
         <form action="page.html" method="get">
             <input type="text" placeholder="Name" name="name"required/>
             <div  class="styled-select slate" style="margin-left:-5px">
-                <select required onchange="myFunction()" id='selection'>
+                <select required onchange="myFunction()" id='selection'  name="field">
                     <option value="" disabled selected>Select Field</option>
-                    <option value="1">Programming</option> 
-                    <option value="2">Networks</option> 
+                    <option value="Computer-Programming">Computer Programming</option> 
+                    <option value="Computer-Networks">Computer-Networks</option> 
                     <option value="cs201" disabled>Opreating Systems</option>
                     <option value="cs201" disabled>Computer Graphics</option>
+                    <option value="cs201" disabled>Opreating Systems</option>
+                    <option value="cs201" disabled>Database Systems </option>
+                    <option value="cs201" disabled>Web & Mobile Applications</option>
+                    <option value="cs201" disabled>Digital Systems</option>
+                    <option value="cs201" disabled>Cybersecurity</option>
+                    <option value="cs201" disabled>Other</option>
+
                 </select>
             </div>
             <div id='time1' style="display: none">
                 Please Select Session:<br>
-                <input type="radio" id='rad'> 10AM - 11AM<br>
-                <input type="radio" id="rad"> 3PM - 4PM<br>
-                <input type="radio" id="rad"> 4PM - 5PM
+                <input type="radio" id='rad'> 8AM - 10AM<br>
+                <input type="radio" id="rad"> 10AM - 12PM<br>
+                <input type="radio" id="rad"> 2PM - 4PM
             </div>
             <div id='time2' style="display: none">
                                 Please Select Session:<br>
-                <input type="radio"  id='rad' required> 9AM - 10AM<br>
-                <input type="radio"  id="rad"required> 2PM - 3PM<br>
-                <input type="radio"  id="rad"required> 1PM - 2PM
+                <input type="radio"  id='rad' required> 12PM - 2PM<br>
+                <input type="radio"  id="rad"required> 4PM - 6PM<br>
+                <input type="radio"  id="rad"required> 6PM - 8PM
             </div>
             <button>Connect</button>
         </form>
