@@ -112,7 +112,7 @@ function updateScroll(){
 
 function arrBox(){
     var myWindow = window.open('','','width=200,height=100');
-    jQuery.get('ec2-54-202-56-225.us-west-2.compute.amazonaws.com:3000/print', function(data) {
+    jQuery.get('http://54.202.56.225:3000/print', function(data) {
         console.log(data);
     });
     myWindow.document.write()
