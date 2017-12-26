@@ -20,8 +20,7 @@ var message = document.getElementById('message');
     feedback = document.getElementById('feedback');
     feedback1 = document.getElementById('feedback1');
 
-
-    name = window.location.search.split('=')[1];
+    name = window.location.search.split('=')[1].split('&')[0];
     if(name.includes('%')) handleName = 'user';
     else handleName = name;
     handle.value = handleName;
