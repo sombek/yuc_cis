@@ -49,7 +49,7 @@ var arr =[];
 
 function remove(){       
     if(users[0]==undefined){
-        fs.exists('public/txt/messages.txt', function(exists) {
+        fs.exists('./public/txt/messages.txt', function(exists) {
             if(exists){
                 fs.unlink('public/txt/messages.txt', function (err) {
                     if (err) throw err;
@@ -59,7 +59,7 @@ function remove(){
             }
         });
         
-        fs.exists('public/txt/links.txt', function(exists) {
+        fs.exists('./public/txt/links.txt', function(exists) {
             if(exists){
                 fs.unlink('public/txt/links.txt', function (err) {
                     if (err) throw err;
