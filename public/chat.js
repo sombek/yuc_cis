@@ -111,11 +111,11 @@ function updateScroll(){
 }
 
 function arrBox(){
-    var myWindow = window.open('','','width=200,height=100');
+    var myWindow = window.open('','','width=500,height=700');
     jQuery.get('http://ec2-54-202-56-225.us-west-2.compute.amazonaws.com:3000/print', function(data) {
-        myWindow.document.write(data)
+        myWindow.document.write(data);
+        myWindow.print();
     });
-    myWindow.print();
 
     var arr = document.getElementById('arrBox');
     arr.style.display='';
