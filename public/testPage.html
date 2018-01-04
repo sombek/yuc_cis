@@ -41,19 +41,19 @@
           </ul>
 
           <ul class="nav navbar-nav navbar-right" style="padding-right:0">
-            <li><p class="navbar-btn" style="margin:7px">
-                <input id='lang' type="checkbox" data-toggle="toggle" data-on="English" data-off="عربي" onchange="language()">
+            <li><p class="navbar-btn" style="margin:10px" id="langBox">
+                <input id='lang' type="checkbox" data-toggle="toggle" data-on="English" data-off='العربية' checked data-size="small" data-offstyle="info">
             </li>
-            <li><p class="navbar-btn" style="margin:7px"><a class="btn btn-danger">&#10005;</a></li>
+            <li><p class="navbar-btn" style="margin:7px"><a class="btn btn-danger" id="exitButton">&#10005;</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
     <!-- Page column style -->
-    <div class="container-fluid text-center">
+    <div id="content"class="container-fluid text-center">
 
-      <!-- Two rows one for title and logo  -->
+      <!-- Two rows one for title, logo, and 'whoIsOnline' box -->
       <div class="row">
         <div class="col-xs-1"></div>
         <div class="col-xs-5 padding-0">
@@ -62,7 +62,7 @@
                 <div id ="output"></div>
                 <div id = "feedback"></div>
             </div>
-            <input id ="whoIsOnline" class="handle" type = "text" disabled/>
+            <input id ="whoIsOnline" class="handle" type = "text" disabled style="text-align:center"/>
 
           </div>
         </div>
@@ -72,7 +72,7 @@
         </div>
         <div class="col-xs-1"></div>
       </div>
-
+      <br>
       <!-- Other for chatboxes  -->
       <div class="row">
           <div class="col-xs-1"></div>
@@ -100,14 +100,21 @@
           </div>
           <div class="col-xs-1"></div>
       </div>
-      <br><br><br><br>
     </div>
 
     <!-- footer section -->
-    <footer class="container-fluid navbar-fixed-bottom text-center">
+    <footer id="footer1" class="footer container-fluid text-center">
       <p id="footer"></p>
     </footer>
-
+    <script>
+    $(document).ready( function() {
+      $('#footer1').css('margin-top',
+        $(document).height()
+        - ( $('#header').height() + $('#content').height() )
+        - $('#footer').height()
+      );
+    });
+    </script>
     <!-- multi-lang script -->
     <script src="js/lang.js"></script>
 </body>

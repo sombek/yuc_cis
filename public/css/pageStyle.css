@@ -5,6 +5,7 @@
 body{
   background-image: url('../img/spiration-light.png');
   font-family: 'Muli', sans-serif;
+  height: 100%;
 }
 
 :lang(ar){
@@ -17,7 +18,9 @@ h2:lang(ar){
 .nav>li>a:focus, .nav>li>a:hover{
   background-color:   rgba(247, 262, 273, 1);
 }
-
+#content{
+  height:100vh;
+}
 /* Set black background color, white text and some padding */
 footer {
   background-color: #555;
