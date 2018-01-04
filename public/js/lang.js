@@ -15,6 +15,7 @@ function arabize(){
   $('#downloadMessages').text('تحميل الرسائل');
   $('#downloadLinks').text('تحميل الروابط');
   $('#title').text('غرفة النقاش');
+  $('#whoIsOnline').attr("placeholder",'المتواجدين الأن');
   $('#handle').attr("placeholder", 'الإسم:');
   $('#message').attr("placeholder", "الرسالة:");
   $('#send').text('إرسال');
@@ -29,6 +30,7 @@ function englishize(){
   $('#downloadMessages').text('download Messages');
   $('#downloadLinks').text('download links');
   $('#title').text('Discussion Room');
+  $('#whoIsOnline').attr("placeholder",'who is online');
   $('#handle').attr("placeholder", 'handle');
   $('#message').attr("placeholder", 'message');
   $('#send').text('send');
