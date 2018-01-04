@@ -1,3 +1,19 @@
+@import url(http://fonts.googleapis.com/earlyaccess/lateef.css);
+@import url(http://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
+@import url('https://fonts.googleapis.com/css?family=Muli');
+
+body{
+  background-image: url('../img/spiration-light.png');
+  font-family: 'Muli', sans-serif;
+}
+
+:lang(ar){
+  font-family: 'Droid Arabic Kufi', serif;
+  font-size: 15px
+}
+h2:lang(ar){
+  font-size: 24px;
+}
 .nav>li>a:focus, .nav>li>a:hover{
   background-color:   rgba(247, 262, 273, 1);
 }
@@ -61,7 +77,6 @@ input{
     width: 100%;
     background: #fff;
     border-bottom: 1px solid #eee;
-    font-family: Nunito;
     font-size: 16px;
 }
 .handle{
@@ -90,6 +105,6 @@ input{
     padding-left:0;
 }
 #yuc{
-    margin-top: 60px;
+    margin-top: 70px;
     width: 70px;
 }
