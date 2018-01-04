@@ -52,14 +52,16 @@
 
     <!-- Page column style -->
     <div class="container-fluid text-center">
+
       <!-- Two rows one for title and logo  -->
-      <!-- Other for chatboxes  -->
       <div class="row">
         <div class="col-sm-12">
           <img src="https://pbs.twimg.com/profile_images/1184870884/logo_400x400.png" id='yuc'>
           <h2 id="title"></h2>
         </div>
       </div>
+
+      <!-- Other for chatboxes  -->
       <div class="row">
           <div class="col-xs-1"></div>
           <div class="col-xs-5 padding-0">
@@ -92,44 +94,7 @@
       <p id="footer"></p>
     </footer>
 
-  <script>
-    var lang = document.getElementById('lang');
-    $(document).ready( function() {
-      if(lang.checked == false) arabize();
-    });
-
-    lang.onchange = ()=>{
-      if(lang.checked == false) arabize();
-      else englishize();
-    }
-    function arabize(){
-      $('html').attr('dir','rtl');
-      $('html').attr('lang','ar');
-      $('#sessionName').text('إسم الغرفة');
-      $('#print').text('طباعة');
-      $('#downloadMessages').text('تحميل الرسائل');
-      $('#downloadLinks').text('تحميل الروابط');
-      $('#title').text('غرفة النقاش');
-      $('#handle').attr("placeholder", 'الإسم:');
-      $('#message').attr("placeholder", "الرسالة:");
-      $('#send').text('إرسال');
-      $('#shareLinks').text('مشاركة');
-      $('#footer').text('هذه الصفحة عبارة عن صفحة تفاعلية ');
-    }
-    function englishize(){
-      $('html').attr('dir','ltr');
-      $('html').attr('lang','en');
-      $('#sessionName').text('Session Name');
-      $('#print').text('print');
-      $('#downloadMessages').text('download Messages');
-      $('#downloadLinks').text('download links');
-      $('#title').text('Discussion Room');
-      $('#handle').attr("placeholder", 'handle');
-      $('#message').attr("placeholder", 'message');
-      $('#send').text('send');
-      $('#shareLinks').text('Share');
-      $('#footer').text('This is collaborative information seeking new proposed interface');
-    }
-  </script>
+    <!-- multi-lang script -->
+    <script src="js/lang.js"></script>
 </body>
 </html>
