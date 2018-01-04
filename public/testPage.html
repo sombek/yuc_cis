@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>YUC-CIS-Interface</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Bootstrap dependeices  -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+  <!-- Bootstrap toggle dependeices -->
+  <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+  <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+  <!-- User defined css -->
+  <link rel="stylesheet" href="css/pageStyle.css">
+
+</head>
+<body>
+    <!-- Navabar  -->
+    <nav class="navbar navbar-primary bg-faded navbar-fixed-top" style="background-color:#e3f2fd">
+      <div class="container-fluid">
+        <div class="navbar-header"> <!--When collapsed-->
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+            <span class="icon-bar" style="background-color:black"></span>
+            <span class="icon-bar" style="background-color:black"></span>
+            <span class="icon-bar" style="background-color:black"></span></button>
+            <a class="navbar-brand">
+              <img src="https://pbs.twimg.com/profile_images/1184870884/logo_400x400.png" width="30" height="30"  style="margin-top:-5px"alt="YUC-CIS-Interface">
+            </a>
+            <span class="navbar-brand" style="margin-left:-23px" id='sessionName'></span>
+        </div>
+        <div class="collapse navbar-collapse" id="myNavbar"> <!--When NOT collapsed-->
+          <ul class="nav navbar-nav navbar-center">
+            <li><p class="navbar-btn" style="margin:7px"><a class="btn btn-primary" id="print"></a></li>
+            <li><p class="navbar-btn" style="margin:7px"><a class="btn btn-primary"id="downloadMessages"></a></li>
+            <li><p class="navbar-btn" style="margin:7px"><a class="btn btn-primary"id="downloadLinks"></a></li>
+          </ul>
+
+          <ul class="nav navbar-nav navbar-right">
+            <li><p class="navbar-btn" style="margin:7px">
+                <input id='lang' type="checkbox" data-toggle="toggle" data-on="English" data-off="عربي" onchange="language()">
+            </li>
+            <li><p class="navbar-btn" style="margin:7px"><a class="btn btn-danger">&#10005;</a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Page column style -->
+    <div class="container-fluid text-center">
+      <!-- Two rows one for title and logo  -->
+      <!-- Other for chatboxes  -->
+      <div class="row">
+        <div class="col-sm-12">
+          <img src="https://pbs.twimg.com/profile_images/1184870884/logo_400x400.png" id='yuc'>
+          <h2 id="title"></h2>
+        </div>
+      </div>
+      <div class="row">
+          <div class="col-xs-1"></div>
+          <div class="col-xs-5 padding-0">
+            <div class="chatBox">
+                <div  id = "chat-window" style="display: flex; flex-direction: column-reverse;">
+                    <div id ="output"></div>
+                    <div id = "feedback"></div>
+                </div>
+
+                <input id = "handle" type = "text" disabled/>
+                <input id = "message" type = "text" onkeydown = "if (event.keyCode == 13)
+                    document.getElementById('send').click()"  />
+                <button class="shareButton" id='send'></button>
+            </div>
+          </div>
+          <div class="col-xs-5 padding-0">
+            <div class="chatBox">
+                <div  id = "chat-window" style="display: flex; flex-direction: column-reverse;height:388px;">
+                    <div id ="output"></div>
+                    <div id = "feedback"></div>
+                </div>
+                <button class="shareButton" id='shareLinks'></button>
+            </div>
+          </div>
+          <div class="col-xs-1"></div
+      </div></div>
+    </div>
+
+    <footer class="container-fluid text-center">
+      <p id="footer"></p>
+    </footer>
+
+  <script>
+    var lang = document.getElementById('lang');
+    $(document).ready( function() {
+      if(lang.checked == false) arabize();
+    });
+
+    lang.onchange = ()=>{
+      if(lang.checked == false) arabize();
+      else englishize();
+    }
+    function arabize(){
+      $('html').attr('dir','rtl');
+      $('html').attr('lang','ar');
+      $('#sessionName').text('إسم الغرفة');
+      $('#print').text('طباعة');
+      $('#downloadMessages').text('تحميل الرسائل');
+      $('#downloadLinks').text('تحميل الروابط');
+      $('#title').text('غرفة النقاش');
+      $('#handle').attr("placeholder", 'الإسم:');
+      $('#message').attr("placeholder", "الرسالة:");
+      $('#send').text('إرسال');
+      $('#shareLinks').text('مشاركة');
+      $('#footer').text('هذه الصفحة عبارة عن صفحة تفاعلية ');
+    }
+    function englishize(){
+      $('html').attr('dir','ltr');
+      $('html').attr('lang','en');
+      $('#sessionName').text('Session Name');
+      $('#print').text('print');
+      $('#downloadMessages').text('download Messages');
+      $('#downloadLinks').text('download links');
+      $('#title').text('Discussion Room');
+      $('#handle').attr("placeholder", 'handle');
+      $('#message').attr("placeholder", 'message');
+      $('#send').text('send');
+      $('#shareLinks').text('Share');
+      $('#footer').text('This is collaborative information seeking new proposed interface');
+    }
+  </script>
+</body>
+</html>
