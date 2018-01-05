@@ -19,14 +19,6 @@ var sessionName = document.getElementById('sessionName');
     shareLinks = document.getElementById('shareLinksButton')
 
 // TODO ..
-//get the session Name function
-function getSessionName(){
-  var location = window.location.href;
-  var url = new URL(location);
-  var c = url.searchParams.get("field");
-  return c;
-}
-sessionName.innerHTML = getSessionName();
 
 //get who is online list
 
@@ -35,6 +27,7 @@ sessionName.innerHTML = getSessionName();
 //links send and receive
 
 //check the connection
+
 /*
 
 socket.on('check', function(message) {

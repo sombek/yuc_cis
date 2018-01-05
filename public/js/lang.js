@@ -17,7 +17,7 @@ function arabize(){
   $('#setupButton').text('إعدادات : ');
   $('#setupButtonText').text('إعدادات');
   //Navbar buttons
-  //$('#sessionName').text('إسم الغرفة');
+  $('#sessionName').text(getSessionName());
   $('#options').text('خصائص');
   $('#print').text('طباعة');
   $('#downloadMessages').text('تحميل الرسائل');
@@ -27,11 +27,13 @@ function arabize(){
   $('#title').text('غرفة النقاش');
   $('#whoIsOnlineText').attr("placeholder",'المتواجدين الأن');
   $('#handle').attr("placeholder", 'الإسم:');
+  $('#handle').css("direction","rtl");
   $('#messageInput').attr("placeholder", "الرسالة:");
+  $('#messageInput').css("direction","rtl");
   $('#sendMessageButton').text('إرسال');
   $('#shareLinksButton ').text('مشاركة');
   //footer
-  $('#footer').html('هذه الصفحة عبارة عن واجهة مستخدم مبتكرة لزيادة فعالية البحث التفاعلي <br> © جميع الحقوق محفوظة 2018');
+  $('#footer').html('هذه الصفحة عبارة عن واجهة مستخدم مبتكرة لزيادة فعالية البحث التفاعلي <br> © جميع الحقوق محفوظة ٢٠١٨<br> النسخة ٢.٠.٠ التجريبية');
 }
 function englishize(){
 
@@ -42,7 +44,7 @@ function englishize(){
   $('#setupButton').text('Options : ');
   $('#setupButtonText').text('Options');
   //Navbar buttons
-  //$('#sessionName').text('Session Name');
+  $('#sessionName').text(getSessionName());
   $('#options').text('Options');
   $('#print').text('Print');
   $('#downloadMessages').text('Download Messages');
@@ -53,10 +55,11 @@ function englishize(){
   $('#whoIsOnlineText').attr("placeholder",'Who Is Online');
   $('#handle').attr("placeholder", 'Handle');
   $('#messageInput').attr("placeholder", 'Write Your Message');
+  $('#messageInput').css("direction","ltr");
   $('#sendMessageButton').text('Send');
   $('#shareLinksButton').text('Share');
   //footer
-  $('#footer').html('This is a collaborative information seeking new proposed interface<br> © All Rights Reserved 2018');
+  $('#footer').html('This is a collaborative information seeking new proposed interface<br> © All Rights Reserved 2018<br> v2.0.0 beta');
 }
 
 document.getElementById("overlayDiv").style.display = "none";
@@ -73,4 +76,11 @@ function closeNav() {
     document.getElementById("overlayDiv").style.display = "none";
     document.getElementById("mySidenav").style.width = "0";
     document.getElementById("overlayDiv").style.backgroundColor = "rgba(0,0,0,0)";
+}
+
+function getSessionName(){
+  var location = window.location.href;
+  var url = new URL(location);
+  var c = url.searchParams.get("field");
+  return c;
 }
