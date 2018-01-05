@@ -6,22 +6,37 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Bootstrap dependeices  -->
+  <!-- Bootstrap dependencies  -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-  <!-- Bootstrap toggle dependeices -->
+  <!-- Bootstrap toggle dependencies -->
   <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
   <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
-
+  <!-- Socket.io dependencies -->
+  <script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
   <!-- User defined css -->
   <link rel="stylesheet" href="css/pageStyle.css">
 
 </head>
 <body>
+    <!-- Side Navbar  -->
+    <div id="overlayDiv"></div>
+    <div id="mySidenav" class="sidenav">
+      <hr style="margin-top:0px;">
+      <div class="container" style="color:white">
+        <br>
+        <h4 style="text-align:left;margin-left:30px;" id="settingsSidebar"></h4>
+        <br>
+        <span style="color:white; margin:10px" id="languageOption"></span><input id='lang' style="margin:10px"type="checkbox" data-toggle="toggle" data-on="English" data-off='العربية' checked data-size="" data-offstyle="info"><br>
+        <span style="color:white;margin:10px" id="setupButton"> Setup :  </span> <span class="btn btn-primary"style="margin:10px" id="setupButtonText"></span>
+      </div>
+      <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+    </div>
+
     <!-- Navabar  -->
-    <nav class="navbar navbar-primary bg-faded navbar-fixed-top" style="background-color:#e3f2fd">
+    <nav class="navbar navbar-primary bg-faded navbar-fixed-top" style="background-color:#E1F5FE">
       <div class="container-fluid">
         <div class="navbar-header"> <!--When collapsed-->
           <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -31,39 +46,35 @@
             <a class="navbar-brand">
               <img src="https://pbs.twimg.com/profile_images/1184870884/logo_400x400.png" width="30" height="30"  style="margin-top:-5px"alt="YUC-CIS-Interface">
             </a>
-            <span class="navbar-brand" style="margin-left:-23px" id='sessionName'></span>
+            <span class="navbar-brand" style="margin-left:-23px;margin-top:0px; font-size:16px" id='sessionName'></span>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar"> <!--When NOT collapsed-->
           <ul class="nav navbar-nav navbar-center">
-            <li><p class="navbar-btn" style="margin:7px"><a class="btn btn-primary" id="print"></a></li>
-            <li><p class="navbar-btn" style="margin:7px"><a class="btn btn-primary"id="downloadMessages"></a></li>
-            <li><p class="navbar-btn" style="margin:7px"><a class="btn btn-primary"id="downloadLinks"></a></li>
+            <li><p class="navbar-btn" style="margin-top:11px; margin-right:6px;"><a class="btn btn-primary" id="print"></a></li>
+            <li><p class="navbar-btn" style="margin-top:11px; margin-right:6px;"><a class="btn btn-primary"id="downloadMessages"></a></li>
+            <li><p class="navbar-btn" style="margin-top:11px; margin-right:6px;"><a class="btn btn-primary"id="downloadLinks"></a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right" style="padding-right:0">
-            <li><p class="navbar-btn" style="margin:10px" id="langBox">
-                <input id='lang' type="checkbox" data-toggle="toggle" data-on="English" data-off='العربية' checked data-size="small" data-offstyle="info">
-            </li>
-            <li><p class="navbar-btn" style="margin:7px"><a class="btn btn-danger" id="exitButton">&#10005;</a></li>
+            <li><p class="navbar-btn" style="margin-top:11px; margin-right:6px;"><a class="btn btn-primary"id="options" onclick="openNav()"></a></li>
+            <li><p class="navbar-btn" style="margin:7px"><a class="btn btn-danger" id="exitButton" style="margin-top:3px">&#10005;</a></li>
           </ul>
         </div>
       </div>
     </nav>
 
     <!-- Page column style -->
-    <div id="content"class="container-fluid text-center">
+    <div id="content" class="container-fluid text-center">
 
       <!-- Two rows one for title, logo, and 'whoIsOnline' box -->
       <div class="row">
         <div class="col-xs-1"></div>
         <div class="col-xs-5 padding-0">
           <div class="chatBox" style="margin-top:70px">
+            <input id ="whoIsOnlineText" class="handle" type = "text" disabled style="text-align:center"/>
             <div  id = "chat-window" style="height:70px">
-                <div id ="output"></div>
-                <div id = "feedback"></div>
+                <div id ="onlineUsersList"></div>
             </div>
-            <input id ="whoIsOnline" class="handle" type = "text" disabled style="text-align:center"/>
-
           </div>
         </div>
         <div class="col-xs-5">
@@ -76,26 +87,32 @@
       <!-- Other for chatboxes  -->
       <div class="row">
           <div class="col-xs-1"></div>
-          <div class="col-xs-5 padding-0">
+          <div class="col-xs-5 padding-0"> <!-- messages box -->
             <div class="chatBox">
-                <div  id = "chat-window" style="display: flex; flex-direction: column-reverse;">
-                    <div id ="output"></div>
-                    <div id = "feedback"></div>
+                <div id="chat-window" style="display: flex; flex-direction: column-reverse;" class="scrollable">
+                  <!-- output area -->
+                  <div id="messagesOutput" class="output">
+                    <p><strong>1:</strong>aa<sub id="time">21:54:18</sub></p>
+                    <p><strong>1:</strong>abc<sub id="time">21:54:21</sub></p>
+                    <p><strong>1:</strong> Hello world <sub id="time">21:54:21</sub></p>
+                    <p><strong>1:</strong>abc<sub id="time">21:54:21</sub></p>
+                  </div>
+                  <div id="feedback"></div>
                 </div>
 
+                <!-- input area -->
                 <input id = "handle" class="handle" type = "text" disabled/>
-                <input id = "message" type = "text" onkeydown = "if (event.keyCode == 13)
-                    document.getElementById('send').click()"  />
-                <button class="shareButton" id='send'></button>
+                <input id = "messageInput" type = "text" onkeydown = "if (event.keyCode == 13)
+                    document.getElementById('sendMessageButton').click()"  />
+                <button class="shareButton" id='sendMessageButton'></button>
             </div>
           </div>
-          <div class="col-xs-5 padding-0">
+          <div class="col-xs-5 padding-0"> <!-- links box -->
             <div class="chatBox">
                 <div  id = "chat-window" style="display: flex; flex-direction: column-reverse;height:388px;">
-                    <div id ="output"></div>
-                    <div id = "feedback"></div>
+                    <div id ="linksOutput"></div>
                 </div>
-                <button class="shareButton" id='shareLinks'></button>
+                <button class="shareButton" id='shareLinksButton'></button>
             </div>
           </div>
           <div class="col-xs-1"></div>
@@ -106,16 +123,16 @@
     <footer id="footer1" class="footer container-fluid text-center">
       <p id="footer"></p>
     </footer>
+
     <script>
-    $(document).ready( function() {
-      $('#footer1').css('margin-top',
-        $(document).height()
-        - ( $('#header').height() + $('#content').height() )
-        - $('#footer').height()
-      );
-    });
+
     </script>
+    <!-- chat and others scripts -->
+    <script src="js/chat.js"></script>
+    <!-- real_time scripts -->
+    <!-- <script src="js/real_time.js"></script> -->
     <!-- multi-lang script -->
     <script src="js/lang.js"></script>
+
 </body>
 </html>

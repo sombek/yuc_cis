@@ -1,4 +1,3 @@
-@import url(http://fonts.googleapis.com/earlyaccess/lateef.css);
 @import url(http://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
 @import url('https://fonts.googleapis.com/css?family=Muli');
 
@@ -7,20 +6,29 @@ body{
   font-family: 'Muli', sans-serif;
   height: 100%;
 }
-
 :lang(ar){
   font-family: 'Droid Arabic Kufi', serif;
   font-size: 15px
 }
+
 h2:lang(ar){
   font-size: 24px;
 }
+
 .nav>li>a:focus, .nav>li>a:hover{
   background-color:   rgba(247, 262, 273, 1);
 }
+#time{
+    display: block;
+    text-align: right;
+    font-family: 'Muli', sans-serif;
+    font-size: 10px;
+}
+
 #content{
   height:100vh;
 }
+
 /* Set black background color, white text and some padding */
 footer {
   background-color: #555;
@@ -50,26 +58,29 @@ footer {
     background: #f9f9f9;
 }
 
-#output p{
+/* messages */
+.output p{
     padding: 14px 0px;
     margin: 0 20px;
     border-bottom: 1px solid #e9e9e9;
     color: #555;
+    text-align: left;
+    font-family: 'Muli', sans-serif;
+    font-size: 16px
+}
+/* user name  */
+.output strong{
+    color: #286090;
+    font-family: 'Muli', sans-serif;
 }
 
 #feedback p{
     color: #aaa;
     padding: 14px 0px;
     margin: 0 20px;
+    font-family: 'Muli', sans-serif;
 }
 
-#output strong{
-    color: #575ed8;
-}
-
-#output1 strong{
-    color: #575ed8;
-}
 
 input{
     padding: 10px 20px;
@@ -81,9 +92,12 @@ input{
     background: #fff;
     border-bottom: 1px solid #eee;
     font-size: 16px;
+    outline: none;
+
 }
+
 .handle{
-    background-color: #e3f2fd;
+    background-color: #E1F5FE;
     height: 30px;
 }
 
@@ -107,7 +121,57 @@ input{
     padding-right:0;
     padding-left:0;
 }
+
 #yuc{
     margin-top: 70px;
     width: 70px;
 }
+
+/* The side navigation menu */
+.sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1032; /* Stay on top */
+    top: 0; /* Stay at the top */
+    background-color: rgba(52, 152, 219, 0.6);
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 53px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+    right: 0;
+}
+
+/* The navigation menu links */
+.sidenav a {
+    text-decoration: none;
+    font-size: 25px;
+    color: black;
+    display: block;
+    transition: 0.3s;
+}
+
+/* When you mouse over the navigation links, change their color */
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+/* Position and style the close button (top right corner) */
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    margin-left: 125px;
+    font-size: 36px;
+}
+
+/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
+#overlayDiv {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  z-index: 1031;
+}
+
+/* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */
+@media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
