@@ -47,7 +47,7 @@ btn.addEventListener("keyup", function(event) {
 window.addEventListener("unload", ()=>{
    console.log('disconnect');
     socket.emit('offline',handleName);
-    socket.disconnect(); 
+    socket.disconnect();
 });
 
 btn.addEventListener('click',function(){
@@ -67,11 +67,11 @@ message.addEventListener('keypress',function(){
     socket.emit('typing',handle.value);
 });
 
-myDate = new Date(); 
+myDate = new Date();
 var time = myDate.getHours() + ":" + myDate.getMinutes() + ":" + myDate.getSeconds();
 
 socket.on('chat', function(data){
-    console.log(data);
+  console.log(data);
   feedback.innerHTML = ""
   output.innerHTML += '<p><strong>'+data.handle +
                       ':</strong>' + data.message +"<sub id = 'time'>"+time+'</sub>' +'</p>' ;
@@ -94,13 +94,13 @@ socket.on('online',function(data){
 socket.on('offline',function(data){
     data.forEach((user)=>{
         document.getElementById('output2').innerHTML = user + ' is connected' + '<br>';
-    }); 
+    });
 });
 
 socket.on('print',function(data){
     feedback1.innerHTML += '<hr>';
     data.forEach((element,i)=>{
-       feedback1.innerHTML +='<p><strong>'+ (i+1)  +":</strong> <a href='"+element+" 'target='_blank'> <em>" + element + '</p>'; 
+       feedback1.innerHTML +='<p><strong>'+ (i+1)  +":</strong> <a href='"+element+" 'target='_blank'> <em>" + element + '</p>';
         updateScroll();
     });
 });

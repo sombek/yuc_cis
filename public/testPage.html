@@ -2,7 +2,6 @@
 <html>
 <head>
   <title>YUC-CIS-Interface</title>
-
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -18,7 +17,6 @@
   <script src = "https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.3/socket.io.js"></script>
   <!-- User defined css -->
   <link rel="stylesheet" href="css/pageStyle.css">
-
 </head>
 <body>
     <!-- Side Navbar  -->
@@ -73,7 +71,7 @@
           <div class="chatBox" style="margin-top:70px">
             <input id ="whoIsOnlineText" class="handle" type = "text" disabled style="text-align:center"/>
             <div  id = "chat-window" style="height:70px">
-                <div id ="onlineUsersList"></div>
+                <div id ="onlineUsersList"class="outputOnlineUsersList"></div>
             </div>
           </div>
         </div>
@@ -93,13 +91,8 @@
             <div class="chatBox">
                 <div id="chat-window" style="display: flex; flex-direction: column-reverse;" class="scrollable">
                   <!-- output area -->
-                  <div id="messagesOutput" class="output">
-                    <p><strong>1:</strong>aa<sub id="time">21:54:18</sub></p>
-                    <p><strong>1:</strong>abc<sub id="time">21:54:21</sub></p>
-                    <p><strong>1:</strong> Hello world <sub id="time">21:54:21</sub></p>
-                    <p><strong>1:</strong>abc<sub id="time">21:54:21</sub></p>
-                  </div>
                   <div id="feedback"></div>
+                  <div id="messagesOutput" class="output"></div>
                 </div>
 
                 <!-- input area -->
@@ -135,6 +128,5 @@
 
     <!-- multi-lang script & sidenav scripts-->
     <script src="js/lang.js"></script>
-
 </body>
 </html>

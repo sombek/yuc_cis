@@ -1,5 +1,6 @@
 var express = require('express');
 var socket = require('socket.io');
+
 //App setup
 var app = express();
 var server = app.listen(3000,function(){
@@ -12,7 +13,6 @@ var bodyParser = require('body-parser');
 app.use(bodyParser.json()); // support json encoded bodies
 app.use(bodyParser.urlencoded({	extended: true })); // support encoded bodies
 app.use(function (req, res, next) {
-
     // Website you wish to allow to connect
     res.setHeader('Access-Control-Allow-Origin', 'http://ec2-54-202-56-225.us-west-2.compute.amazonaws.com:3000');
 
@@ -44,10 +44,11 @@ app.get('/print', function(req, res) {
 
 //Static files
 app.use(express.static('public'));
+
 var users = [];
 var arr =[];
 
-function remove(){       
+function remove(){
     if(users[0]==undefined){
         fs.exists('./public/txt/messages.txt', function(exists) {
             if(exists){
@@ -58,7 +59,7 @@ function remove(){
                 });
             }
         });
-        
+
         fs.exists('./public/txt/links.txt', function(exists) {
             if(exists){
                 fs.unlink('public/txt/links.txt', function (err) {
@@ -73,21 +74,54 @@ function remove(){
 
 //Socket setup
 var io = socket(server);
+
+//server
 io.on('connection',function(socket){
-    console.log('made socket connection', socket.id);
-   
+  console.log('made socket connection', socket.id);
+
+  socket.on('login',function(data){
+    users.push(data);
+    socket.emit('onlineUsers',users);
+  });
+
+  socket.on('logout',function(data){
+    for (var i in users) {
+      if(users[i].sessionsId == data.sessionsId){
+        if (i > -1) {
+          users.splice(i, 1);
+        }
+      }
+    }
+    socket.emit('onlineUsers',users);
+  });
+
+  socket.on('sendMessage', function(data){
+       console.log(data);
+       io.sockets.emit('receiveMessage',data);
+      //fs.appendFileSync('public/txt/messages.txt', data.handle + ': ' +data.message + ' ('+ time + ')\r\n');
+  });
+
+  socket.on('typing', function(data){
+    //emit the handle is typing...
+    socket.broadcast.emit('typing',data);
+  });
+  socket.on('clearTyping',function(data){
+    socket.broadcast.emit('clearTyping',data);
+  });
+
+  /*
     socket.on('check', function(data){
         io.sockets.emit('check', data);
     });
-    
+
     socket.on('online', function(data){
        if(users.indexOf(data) === -1) {
             users.push(data);
             console.log(data);
         }
         io.sockets.emit('online', users);
-    }); 
-    
+    });
+
     socket.on('offline', function(data){
         console.log(data + '- disconnect');
         for(var i=0; i < users.length; i++) {
@@ -98,8 +132,8 @@ io.on('connection',function(socket){
         console.log(users);
         remove();
         io.sockets.emit('offline', users);
-    }); 
-    
+    });
+
     socket.on('chat', function(data){
          var time = myDate.getHours() + ":" + myDate.getMinutes() + ":" + myDate.getSeconds();
 
@@ -110,18 +144,19 @@ io.on('connection',function(socket){
     socket.on('typing',function(data){
         socket.broadcast.emit('typing',data);
     });
-    
-    myDate = new Date(); 
+
+    myDate = new Date();
 
     socket.on('tabs',function(data){
         var time = myDate.getHours() + ":" + myDate.getMinutes() + ":" + myDate.getSeconds();
 
-        fs.appendFileSync('public/txt/links.txt',time 
+        fs.appendFileSync('public/txt/links.txt',time
                           +' time of first link shared' + '\r\n \r\n');
         data.forEach((link,i)=>{
             fs.appendFileSync('public/txt/links.txt',i+1 + '- '+ link + '\r\n \r\n');
         });
         io.sockets.emit('print', data);
     });
-});
+*/
 
+});//end of connection function

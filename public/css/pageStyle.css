@@ -73,6 +73,19 @@ footer {
     color: #286090;
     font-family: 'Muli', sans-serif;
 }
+/* onlineUsersList */
+.outputOnlineUsersList p{
+    margin: 0 20px;
+    color: #555;
+    text-align: left;
+    font-family: 'Muli', sans-serif;
+    font-size: 15px
+}
+/* user name  */
+.outputOnlineUsersList strong{
+    color: #286090;
+    font-family: 'Muli', sans-serif;
+}
 
 #feedback p{
     color: #aaa;

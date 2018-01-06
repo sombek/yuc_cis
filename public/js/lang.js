@@ -4,13 +4,15 @@ $(document).ready( function() {
   else englishize();
 });
 
+// TODO add validation: when the DOM is loaded
+
 lang.onchange = ()=>{
   if(lang.checked == false) arabize();
   else englishize();
 }
 function arabize(){
   $('html').attr('lang','ar');
-
+  $('.isConnected').text(' متصل');
   //inside Sidebar
   $('#settingsSidebar').text('خصائص جانبية');
   $('#languageOption').text('اللغة : ');
@@ -36,8 +38,10 @@ function arabize(){
   $('#footer').html('هذه الصفحة عبارة عن واجهة مستخدم مبتكرة لزيادة فعالية البحث التفاعلي <br> © جميع الحقوق محفوظة ٢٠١٨<br> النسخة ٢.٠.٠ التجريبية');
 }
 function englishize(){
-
   $('html').attr('lang','en');
+  setTimeout(function () {
+    $('.isConnected').text(' is connected');
+  }, 20);
   //inside Sidebar
   $('#settingsSidebar').text('Sidebar Options');
   $('#languageOption').text('Language : ');
@@ -54,6 +58,7 @@ function englishize(){
   $('#title').text('Discussion Room');
   $('#whoIsOnlineText').attr("placeholder",'Who Is Online');
   $('#handle').attr("placeholder", 'Handle');
+  $('#handle').css("direction","ltr");
   $('#messageInput').attr("placeholder", 'Write Your Message');
   $('#messageInput').css("direction","ltr");
   $('#sendMessageButton').text('Send');

@@ -1,53 +1,151 @@
+'use strict';
 //Make connection
 
 //var socket = io.connect('ec2-54-202-56-225.us-west-2.compute.amazonaws.com:3000');
 var socket = io.connect('http://localhost:3000');
 
+//Query DOM
+var sessionName = document.getElementById('sessionName'),
+    onlineUsersList = document.getElementById('onlineUsersList'),
+    message = document.getElementById('messageInput'),
+    handle = document.getElementById('handle'),
+    sendMessageButton = document.getElementById('sendMessageButton'),
+    messagesOutput = document.getElementById('messagesOutput'),
+    feedback = document.getElementById('feedback'),
+    linksOutput = document.getElementById('linksOutput'),
+    shareLinks = document.getElementById('shareLinksButton');
+
+//global variables
+//var handleName = '';
+
+//initialize the app
+//init();
+
+//Login users to the server
 socket.on('connect', function() {
-  console.log('socket.io connected');
+  let myDate = new Date();
+  console.log('socket.io connected ' + socket.id + ' '+ getHandleName());
+  socket.emit('login',{
+    handle: getHandleName(),
+    sessionsId: socket.id,
+    time: myDate.getHours() + ":" + myDate.getMinutes()
+  });
+  handle.value = getHandleName();
 });
 
-//Query DOM
-var sessionName = document.getElementById('sessionName');
-    onlineUsersList = document.getElementById('onlineUsersList');
-    message = document.getElementById('messageInput');
-    handle = document.getElementById('handle');
-    sendMessageButton = document.getElementById('sendMessageButton');
-    messagesOutput = document.getElementById('messagesOutput');
-    feedback = document.getElementById('feedback');
-    linksOutput = document.getElementById('linksOutput');
-    shareLinks = document.getElementById('shareLinksButton')
-
-// TODO ..
-
 //get who is online list
+socket.on('onlineUsers',function(data){
+    var users = [];
+    data.forEach((user)=>{
+        users.push(user.handle);
+    });
+    console.log(users);
+    for (var i in users) {
+      onlineUsersList.innerHTML += '<p>' + (parseInt(i)+1)+ '- ' + '<strong>' + users[i] + "</strong><span class='isConnected'></span></p>";
+    }
+});
 
-//chat send and receive
+//Sending And Receiving functions
+sendMessageButton.addEventListener('click',function(){
+    let myDate = new Date();
+    let minutes = myDate.getMinutes();
+
+    if(minutes < 10){
+      minutes = myDate.getMinutes().toString();
+      minutes = '0' + minutes;
+    } else minutes = myDate.getMinutes();
+
+    let time = myDate.getHours() + ":" + minutes;
+    function emit(callback){
+      if(message.value != ""){
+        if(message.value.length <= 300){
+          socket.emit('sendMessage',{
+              message: message.value,
+              handle: getHandleName(),
+              time: time
+          });
+          callback('done');
+        }else {
+          callback('error');
+        }
+      }
+    }
+
+    emit((callback)=>{
+      if(callback=='error'){
+        message.value = '';
+        message.value = 'Error: limit 300 character exceeded!!';
+        setTimeout(function () {
+          message.value = '';
+        }, 1500);
+      }else {
+        message.value = '';
+      }
+    })
+});
+socket.on('receiveMessage', function(data){
+    console.log(data);
+    feedback.innerHTML = '';
+    messagesOutput.innerHTML += '<p><strong>'+data.handle +
+                                ':</strong>' +data.message +"<sub id = 'time'>"+data.time+'</sub>' +'</p>';
+});
+
+//Typing functions
+message.addEventListener('keypress',function(){
+  socket.emit('typing',getHandleName());
+});
+socket.on('typing',function(data){
+  feedback.innerHTML = '<p><em>' + data + ' is typing a mesage...</em></p>';
+});
+
+//setup before functions
+var typingTimer;                //timer identifier
+var doneTypingInterval = 1000;  //time in ms, 1 second for example
+//on keyup, start the countdown
+message.addEventListener('keyup', function () {
+  clearTimeout(typingTimer);
+  typingTimer = setTimeout(()=>{
+    console.log('doneTyping');
+    socket.emit('clearTyping','');
+  }, doneTypingInterval);
+});
+//on keydown, clear the countdown
+message.addEventListener('keydown', function () {
+  clearTimeout(typingTimer);
+});
+socket.on('clearTyping',function(data){
+  feedback.innerHTML = '';
+});
+//////////////////
+
+//When user click quit
+$(window).bind('beforeunload', function() {
+  socket.emit('logout',{
+    handle: getHandleName(),
+    sessionsId: socket.id
+  });
+  console.log('sent');
+  socket.disconnect();
+});
+
 
 //links send and receive
 
 //check the connection
+function init(){
+  //getHandleName();
+
+}
+
+function getHandleName(){
+  let handleName;
+  name = window.location.search.split('=')[1].split('&')[0];
+  if(name.includes('%')) handleName = 'user';
+  else handleName = name;
+  return handleName;
+}
 
 /*
-
-socket.on('check', function(message) {
-    console.log(message);
-});
-
-
-
-
-// document.getElementById('title').innerHTML += ' | '+getRoomName();
-
-
-    name = window.location.search.split('=')[1].split('&')[0];
-    if(name.includes('%')) handleName = 'user';
-    else handleName = name;
-    handle.value = handleName;
-
-socket.on('connect', function() {
-    socket.emit('online',handleName);
-});
 
 $('#disconnect').click(function(){
     console.log('disconnect');
