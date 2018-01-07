@@ -48,8 +48,8 @@ app.use(express.static('public'));
 var users = [];
 var arr =[];
 
-function remove(){
-    if(users[0]==undefined){
+function removeTxtFiles(){
+    if(users.length == 0){
         fs.exists('./public/txt/messages.txt', function(exists) {
             if(exists){
                 fs.unlink('public/txt/messages.txt', function (err) {
@@ -75,11 +75,18 @@ function remove(){
 //Socket setup
 var io = socket(server);
 
+function initlizeTxtFiles() {
+  var date = new Date();
+  fs.appendFileSync('public/txt/messages.txt', 'Session started at: '+date.getHours() +':'+date.getMinutes()+'\n');
+  fs.appendFileSync('public/txt/links.txt', 'Session started at: '+date.getHours() +':'+date.getMinutes()+'\n');
+}
+
 //server
 io.on('connection',function(socket){
   console.log('made socket connection', socket.id);
 
   socket.on('login',function(data){
+    if(users.length ==0) removeTxtFiles();
     users.push(data);
     io.sockets.emit('checkUsers',users);
   });
@@ -92,13 +99,13 @@ io.on('connection',function(socket){
         }
       }
     }
+    removeTxtFiles();
     io.sockets.emit('checkUsers',users);
   });
 
   socket.on('sendMessage', function(data){
-       console.log(data);
-       io.sockets.emit('receiveMessage',data);
-      //fs.appendFileSync('public/txt/messages.txt', data.handle + ': ' +data.message + ' ('+ time + ')\r\n');
+    io.sockets.emit('receiveMessage',data);
+    fs.appendFileSync('public/txt/messages.txt', data.handle + ': ' +data.message + ' ('+ data.time + ')\r\n');
   });
 
   socket.on('typing', function(data){

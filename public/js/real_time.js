@@ -79,10 +79,9 @@ sendMessageButton.addEventListener('click',function(){
     })
 });
 socket.on('receiveMessage', function(data){
-    console.log(data);
     feedback.innerHTML = '';
     messagesOutput.innerHTML += '<p><strong>'+data.handle +
-                                ':</strong>' +data.message +"<sub id = 'time'>"+data.time+'</sub>' +'</p>';
+                                ':</strong> ' +data.message +"<sub id = 'time'>"+data.time+'</sub>' +'</p>';
 });
 
 //Typing functions
@@ -100,7 +99,6 @@ var doneTypingInterval = 1000;  //time in ms, 1 second for example
 message.addEventListener('keyup', function () {
   clearTimeout(typingTimer);
   typingTimer = setTimeout(()=>{
-    console.log('doneTyping');
     socket.emit('clearTyping','');
   }, doneTypingInterval);
 });
@@ -125,11 +123,6 @@ $(window).bind('beforeunload', function() {
 
 //links send and receive
 
-//check the connection
-function init(){
-  //getHandleName();
-
-}
 
 function getHandleName(){
   let handleName;
