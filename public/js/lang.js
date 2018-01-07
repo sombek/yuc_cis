@@ -1,15 +1,25 @@
 var lang = document.getElementById('lang');
-$(document).ready( function() {
-  if(lang.checked == false) arabize();
-  else englishize();
-});
+
+function init() {
+  if(!document.getElementById('onlineUsersList').childElementCount == 0){
+    if(lang.checked == false) arabize();
+    else englishize();
+  }
+  else { // to wait untill get the online users elements
+    setTimeout(function () {
+      init();
+    }, 0);
+  }
+}
+
+init();
 
 // TODO add validation: when the DOM is loaded
-
 lang.onchange = ()=>{
-  if(lang.checked == false) arabize();
-  else englishize();
-}
+    if(lang.checked == false) arabize();
+    else englishize();
+  }
+
 function arabize(){
   $('html').attr('lang','ar');
   $('.isConnected').text(' متصل');
@@ -39,9 +49,7 @@ function arabize(){
 }
 function englishize(){
   $('html').attr('lang','en');
-  setTimeout(function () {
-    $('.isConnected').text(' is connected');
-  }, 20);
+  $('.isConnected').text(' is connected');
   //inside Sidebar
   $('#settingsSidebar').text('Sidebar Options');
   $('#languageOption').text('Language : ');

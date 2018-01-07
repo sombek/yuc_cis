@@ -15,12 +15,6 @@ var sessionName = document.getElementById('sessionName'),
     linksOutput = document.getElementById('linksOutput'),
     shareLinks = document.getElementById('shareLinksButton');
 
-//global variables
-//var handleName = '';
-
-//initialize the app
-//init();
-
 //Login users to the server
 socket.on('connect', function() {
   let myDate = new Date();
@@ -34,15 +28,16 @@ socket.on('connect', function() {
 });
 
 //get who is online list
-socket.on('onlineUsers',function(data){
+socket.on('checkUsers',function(data){
     var users = [];
+    var html ='';
     data.forEach((user)=>{
-        users.push(user.handle);
+      users.push(user.handle);
     });
-    console.log(users);
     for (var i in users) {
-      onlineUsersList.innerHTML += '<p>' + (parseInt(i)+1)+ '- ' + '<strong>' + users[i] + "</strong><span class='isConnected'></span></p>";
+      html += '<p>' + (parseInt(i)+1)+ '- ' + '<strong>' + users[i] + "</strong><span class='isConnected'></span></p>";
     }
+    onlineUsersList.innerHTML = html;
 });
 
 //Sending And Receiving functions
@@ -124,7 +119,6 @@ $(window).bind('beforeunload', function() {
     handle: getHandleName(),
     sessionsId: socket.id
   });
-  console.log('sent');
   socket.disconnect();
 });
 

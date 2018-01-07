@@ -81,7 +81,7 @@ io.on('connection',function(socket){
 
   socket.on('login',function(data){
     users.push(data);
-    socket.emit('onlineUsers',users);
+    io.sockets.emit('checkUsers',users);
   });
 
   socket.on('logout',function(data){
@@ -92,7 +92,7 @@ io.on('connection',function(socket){
         }
       }
     }
-    socket.emit('onlineUsers',users);
+    io.sockets.emit('checkUsers',users);
   });
 
   socket.on('sendMessage', function(data){
