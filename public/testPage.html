@@ -48,9 +48,9 @@
         </div>
         <div class="collapse navbar-collapse" id="myNavbar"> <!--When NOT collapsed-->
           <ul class="nav navbar-nav navbar-center">
-            <li><p class="navbar-btn" style="margin-top:11px; margin-right:6px;"><a class="btn btn-primary" id="print" onclick="isLoaded()"></a></li>
-            <li><p class="navbar-btn" style="margin-top:11px; margin-right:6px;"><a class="btn btn-primary"id="downloadMessages"></a></li>
-            <li><p class="navbar-btn" style="margin-top:11px; margin-right:6px;"><a class="btn btn-primary"id="downloadLinks"></a></li>
+            <li><p class="navbar-btn" style="margin-top:11px; margin-right:6px;"><a class="btn btn-primary" id="print" onclick="validateLinks(this)"></a></li>
+            <li><p class="navbar-btn" style="margin-top:11px; margin-right:6px;"><a class="btn btn-primary"id="downloadMessages" onclick="validateLinks(this)"></a></li>
+            <li><p class="navbar-btn" style="margin-top:11px; margin-right:6px;"><a class="btn btn-primary"id="downloadLinks" onclick="validateLinks(this)"></a></li>
           </ul>
 
           <ul class="nav navbar-nav navbar-right" style="padding-right:0">
@@ -128,20 +128,7 @@
 
     <!-- multi-lang script & sidenav scripts-->
     <script src="js/lang.js"></script>
-    <iframe  src="txt/messages.txt" id="txt" name="txt" style="display:none"></iframe>
-    <script>
-      function isLoaded(){
-              var ifTitle = $("#txt")[0].contentDocument.all[3].text;
-              if(ifTitle!=undefined){
-                if ( ifTitle.indexOf("Error")>=0 ) {
-                  alert('There is nothing to print!');
-                  document.getElementById('txt').contentWindow.location.reload();
-                }
-              }else {
-                window.frames["txt"].focus();
-                window.frames["txt"].print();
-              }
-      }
-    </script>
+    <iframe  id="txt" name="txt" style="display:none"></iframe>
+    <script></script>
 </body>
 </html>

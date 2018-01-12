@@ -75,10 +75,10 @@ function removeTxtFiles(){
 //Socket setup
 var io = socket(server);
 
-function initlizeTxtFiles() {
+function initlizeTxtFiles(data) {
   var date = new Date();
-  fs.appendFileSync('public/txt/messages.txt', 'Session started at: '+date.getHours() +':'+date.getMinutes()+'\n');
-  fs.appendFileSync('public/txt/links.txt', 'Session started at: '+date.getHours() +':'+date.getMinutes()+'\n');
+  fs.appendFileSync('public/txt/messages.txt', 'Session started at: '+date.getHours() +':'+date.getMinutes()+ '\t Session Name: ' + data.sessionName + '\r\n ------------------------------------------------------------------------ \r\n\r\n');
+  fs.appendFileSync('public/txt/links.txt', 'Session started at: '+date.getHours() +':'+date.getMinutes()+ '\t Session Name: ' + data.sessionName + '\r\n ------------------------------------------------------------------------ \r\n\r\n');
 }
 
 //server
@@ -105,7 +105,15 @@ io.on('connection',function(socket){
 
   socket.on('sendMessage', function(data){
     io.sockets.emit('receiveMessage',data);
-    fs.appendFileSync('public/txt/messages.txt', data.handle + ': ' +data.message + ' ('+ data.time + ')\r\n');
+    fs.access('public/txt/messages.txt', (notExist) => {
+      if(notExist){
+        initlizeTxtFiles(data);
+        fs.appendFileSync('public/txt/messages.txt', data.handle + ': ' +data.message + ' ('+ data.time + ')\r\n');
+      } else{
+        fs.appendFileSync('public/txt/messages.txt', data.handle + ': ' +data.message + ' ('+ data.time + ')\r\n');
+      }
+
+    });
   });
 
   socket.on('typing', function(data){

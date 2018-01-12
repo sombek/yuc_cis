@@ -51,33 +51,21 @@ sendMessageButton.addEventListener('click',function(){
     } else minutes = myDate.getMinutes();
 
     let time = myDate.getHours() + ":" + minutes;
-    function emit(callback){
-      if(message.value != ""){
-        if(message.value.length <= 300){
-          socket.emit('sendMessage',{
-              message: message.value,
-              handle: getHandleName(),
-              time: time
-          });
-          callback('done');
-        }else {
-          callback('error');
-        }
-      }
-    }
 
-    emit((callback)=>{
+    emitMessage(time, (callback) => {
       if(callback=='error'){
         message.value = '';
         message.value = 'Error: limit 300 character exceeded!!';
         setTimeout(function () {
           message.value = '';
-        }, 1500);
+        }, 2500);
       }else {
         message.value = '';
       }
-    })
+
+    });
 });
+
 socket.on('receiveMessage', function(data){
     feedback.innerHTML = '';
     messagesOutput.innerHTML += '<p><strong>'+data.handle +
@@ -130,6 +118,30 @@ function getHandleName(){
   if(name.includes('%')) handleName = 'user';
   else handleName = name;
   return handleName;
+}
+
+function getSessionName(){
+  let sessionName;
+  name = window.location.search.split('=')[2].split('&')[0];
+  if(name.includes('%')) handleName = 'user';
+  else sessionName = name;
+  return sessionName;
+}
+
+function emitMessage(time,callback){
+  if(message.value != ""){
+    if(message.value.length <= 300){
+      socket.emit('sendMessage',{
+          message: message.value,
+          handle: getHandleName(),
+          sessionName: getSessionName(),
+          time: time
+      });
+      if(typeof callback == "function") callback('done');
+    }else {
+      if(typeof callback == "function") callback('error');
+    }
+  }
 }
 
 /*
